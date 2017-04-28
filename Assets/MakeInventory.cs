@@ -10,11 +10,6 @@ public class MakeInventory : MonoBehaviour
     public GameObject inventoryBox;
 
 
-    /// <summary>
-    /// target player (beta)
-    /// </summary>
-    public Player targetPlayer;
-
 
     private static int boxNum = 6;
 
@@ -50,6 +45,11 @@ public class MakeInventory : MonoBehaviour
 
     void Update()
     {
+
+
+        var targetPlayer = Player.Instance;
+        if (targetPlayer == null) return;
+
 
         var index = 0;
 

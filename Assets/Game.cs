@@ -6,64 +6,24 @@ using System.Text;
 using UnityEngine;
 using RPG;
 
-class Game
+class Game : MonoBehaviour
 {
 
-    public Dictionary<string, Map> maps;
+    public static Game Instance { get; private set; }
 
+    public Player Player { get; set; }
 
-    public Game()
+    public void Awake()
     {
-
-        maps = new Dictionary<string, Map>();
-
+        Debug.Log("Awake Game");
+        Instance = this;
     }
 
-
-
-
-    public void OnLoad()
+    public void OnAttack()
     {
+        if (Player.Instance == null) return;
 
-        maps["map1"].Load();
-
-
-
-
-
-    }
-
-
-
-    public void OnEnterFrame()
-    {
-
-    }
-
-    public void MakeMap()
-    {
-
-
-        var map = new Map(15, 10);
-
-        map.data = new int[,]
-        {
-            { 322, 321, 322, 321, 322, 321, 322, 321, 322, 321, 322, 321, 322, 321, 322 },
-            { 322, 321, 322, 321, 322, 321, 322, 321, 322, 321, 322, 321, 322, 321, 322 },
-            { 322, 321, 322, 321, 322, 322, 322, 321, 322, 322, 322, 321, 322, 321, 322 },
-            { 322, 322, 322, 321, 322, 321, 322, 321, 322, 321, 322, 321, 322, 321, 322 },
-            { 322, 321, 322, 321, 322, 321, 322, 321, 322, 321, 322, 321, 322, 321, 322 },
-            { 322, 321, 322, 321, 322, 321, 322, 321, 322, 321, 322, 322, 322, 321, 322 },
-            { 322, 321, 322, 321, 322, 321, 322, 321, 322, 321, 322, 321, 322, 321, 322 },
-            { 322, 321, 322, 322, 322, 321, 322, 321, 322, 321, 322, 321, 322, 321, 322 },
-            { 322, 321, 322, 321, 322, 321, 322, 322, 322, 321, 322, 321, 322, 321, 322 },
-            { 322, 321, 322, 321, 322, 321, 322, 321, 322, 321, 322, 321, 322, 322, 322 }
-        };
-
-
-        maps.Add("map1", map);
-
-
+        Player.Instance.lua.Attack();
 
     }
 

@@ -7,7 +7,6 @@ public class HP_Bar : MonoBehaviour
 {
 
     public GameObject heart;
-    public Player player;
 
     private List<GameObject> hearts;
 
@@ -45,13 +44,17 @@ public class HP_Bar : MonoBehaviour
     void Update()
     {
 
+
+        if (Game.Instance.Player == null) return;
+
+
         for (var i = 0; i < maxNum; ++i)
         {
             var image = hearts[i].GetComponent<Image>();
 
             var color = image.color;
 
-            color.a = player.hp - 1 >= i ? 1f : 0f;
+            color.a = Game.Instance.Player.hp - 1 >= i ? 1f : 0f;
 
             image.color = color;
 

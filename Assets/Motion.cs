@@ -23,11 +23,6 @@ public class Motion : MonoBehaviour
     private Locomotion locomotion = null;
 
 
-    public Player player;
-
-
-
-
     // Use this for initialization
     void Start()
     {
@@ -36,7 +31,6 @@ public class Motion : MonoBehaviour
     }
 
     private Vector2 currentDirection = Vector2.up;
-
 
 
 
@@ -77,10 +71,6 @@ public class Motion : MonoBehaviour
     }
 
 
-
-
-
-
     void Update()
     {
         if (animator && Camera.main)
@@ -88,67 +78,38 @@ public class Motion : MonoBehaviour
             _Do(transform, Camera.main.transform, ref speed, ref direction);
             locomotion.Do(speed * 6, direction * 180);
 
-
         }
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            GetComponent<RPG_Animator>().Attack();
+        }
+
+
+
     }
 
     private void LateUpdate()
     {
-        player.position = new RPG.Vec3(
+
+        if (Player.Instance == null) return;
+
+        Player.Instance.position = new RPG.Vec3(
             transform.position.x,
             transform.position.y,
             transform.position.z);
 
+
+        Player.Instance.rotation = new RPG.Vec3(
+            transform.rotation.eulerAngles.x,
+            transform.rotation.eulerAngles.y,
+            transform.rotation.eulerAngles.z);
+
+
+
+
+
     }
 
-
-    /*
-
-            void Update()
-    {
-
-        // 右・左
-        float x = CrossPlatformInputManager.GetAxisRaw("Horizontal");
-
-        // 上・下
-        float y = CrossPlatformInputManager.GetAxisRaw("Vertical");
-
-        // 移動する向きを求める
-        Vector2 _direction = new Vector2(x, y).normalized;
-
-        Debug.Log(_direction);
-        Debug.Log(_direction.magnitude);
-        // 移動の制限
-        //    Move(direction);
-
-
-        // 移動していない
-        if (_direction.magnitude <= 0.0005) return;
-
-
-        //_direction.
-
-
-
-
-        var targetDirection = _direction;// a * Mathf.Rad2Deg;
-
-
-        var direction = targetDirection - currentDirection;
-        currentDirection = targetDirection;
-
-        var a = Mathf.Atan2(direction.x, direction.y);
-
-
-        locomotion.Do(6, a);
-
-        if (animator && Camera.main)
-        {
-            JoystickToEvents.Do(transform, Camera.main.transform, ref speed, ref direction);
-            //  locomotion.Do(speed * 6, a);
-        }
-    }
-
-    */
 
 }

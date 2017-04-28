@@ -1,0 +1,11 @@
+local module1 = {}
+
+module1.method1 = function()
+    return "Method 1"
+end
+
+module1.method2 = function()
+    return "Method 2"
+end
+
+return module1

@@ -1,0 +1,4 @@
+local _ENV = require("aaa");
+local a;
+
+a = 0;

@@ -1295,7 +1295,7 @@ namespace MoonSharp.Interpreter.Execution.VM
 			DynValue h = null;
 
 
-			while (nestedMetaOps > 0)
+            while (nestedMetaOps > 0)
 			{
 				--nestedMetaOps;
 
