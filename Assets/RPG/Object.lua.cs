@@ -126,7 +126,15 @@ namespace RPG
         }
 
 
+        public void Scale(float scale)
+        {
+            rpgObject.Scale(scale, scale, scale);
+        }
 
+        public void Scale(float x, float y, float z)
+        {
+            rpgObject.Scale(x, y, z);
+        }
 
 
         public void Update()

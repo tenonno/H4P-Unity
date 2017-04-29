@@ -82,3 +82,4 @@ end);
 Hack.onscorechange = (function (this)
 
 end);
+Hack:start();

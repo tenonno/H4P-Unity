@@ -138,7 +138,15 @@ public class RPG_Hack
 
     public void Log(string text)
     {
-        Debug.Log(text);
+
+
+#if UNITY_EDITOR
+            UnityEditor.EditorUtility.DisplayDialog("H4P", text, "OK");
+#else
+        MobileNativeMessage msg = new MobileNativeMessage("Message Titile", text);
+#endif
+
+
     }
 
     public void Gameover()
@@ -153,7 +161,13 @@ public class RPG_Hack
         Debug.Log("Game Clear");
     }
 
-
+    public void Start()
+    {
+        LuaEngine.Instance.script.DoString(@"
+            Hack.onload();
+            game.onload();
+        ");
+    }
 
 
 
@@ -219,6 +233,9 @@ public class LuaEngine : MonoBehaviour
 
     public void Reload()
     {
+        var isOn = GameObject.Find("UseFeeles").GetComponent<Toggle>().isOn ? 1 : 0;
+        PlayerPrefs.SetInt("UseFeeles", isOn);
+
         SceneManager.LoadScene("main");
     }
 
@@ -229,6 +246,7 @@ public class LuaEngine : MonoBehaviour
 
         script = new Script(CoreModules.Preset_Complete);
 
+        GameObject.Find("UseFeeles").GetComponent<Toggle>().isOn = PlayerPrefs.GetInt("UseFeeles") > 0;
 
 
 
@@ -274,21 +292,21 @@ public class LuaEngine : MonoBehaviour
         script.Options.ScriptLoader = new MyCustomScriptLoader();
 
 
+        // Feeles を使う
+        if (GameObject.Find("UseFeeles").GetComponent<Toggle>().isOn)
+        {
+            GameObject.Find("Twitter").GetComponent<Twitter>().RunGistFeelesScript();
+        }
+        // main.js を使う
+        else
+        {
+            DoString(
+                Resources.Load<TextAsset>("Scripts/_main").text
+                );
+        }
 
-        var text = Resources.Load<TextAsset>("Scripts/_main").text;
 
 
-        text = ReplaceENV(text);
-        text = ReplaceNewClass(text);
-
-        Debug.Log(text);
-        script.DoString(text);
-
-
-        script.DoString(@"
-            Hack.onload();
-            game.onload();
-        ");
 
     }
 
@@ -351,6 +369,14 @@ public class LuaEngine : MonoBehaviour
     static void Log(string text)
     {
         Debug.Log(text);
+    }
+
+
+    public void DoString(string text)
+    {
+        text = ReplaceENV(text);
+        text = ReplaceNewClass(text);
+        script.DoString(text);
     }
 
     private string ReplaceENV(string text)

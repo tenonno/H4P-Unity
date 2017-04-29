@@ -15,7 +15,7 @@ public class HackSystem : MonoBehaviour
     void Start()
     {
 
-        editor.text = "log(1)";
+        editor.text = "Hack.player.hp = 3";
 
         runButton.onClick.AddListener(Run);
 

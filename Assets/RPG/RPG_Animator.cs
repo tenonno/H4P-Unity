@@ -85,6 +85,7 @@ public class RPG_Animator : MonoBehaviour
 
 
 
+        attackCollisionSphere.GetComponent<MeshRenderer>().enabled = false;
 
         // attackCollisionSphere.AddComponent<SphereCollider>();
 

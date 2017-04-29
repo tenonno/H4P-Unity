@@ -61,6 +61,13 @@ namespace RPG
             Locate2D(x, y);
         }
 
+        public void Scale(float x, float y, float z)
+        {
+            scale.x = x;
+            scale.y = y;
+            scale.z = z;
+        }
+
         public void Locate2D(float x, float y)
         {
             position.x = x;
